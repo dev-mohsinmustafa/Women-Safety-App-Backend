@@ -40,11 +40,18 @@ const userSchema = new mongoose.Schema({
         required: true,
         // emial me unique chez ye rkhne kyo ke esa nai hai ke mera pehle se koi email exist krta hai 
         // aor ap phr se us ko signup ne krwa skty es leye email unique: true rkhna hai   
-        unique: true
+        unique: true,
+        validate: {
+            validator: function(v) {
+              return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v);
+            },
+            message: props => `${props.value} is not a valid email!`
+          },
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        minLength: 6,
     },
     profilepic: {
         type: String,
